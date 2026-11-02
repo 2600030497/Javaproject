@@ -1,1 +1,760 @@
-"# Javaproject" 
+// --- 1. DATA REPOSITORY ---
+
+// Active Authenticated Student (Module 1: Student Module)
+let currentStudent = {
+  studentId: 1008,
+  studentName: "Aditya Nair",
+  email: "aditya.n@campus.edu",
+  year: "3rd Year",
+  department: "Computer Science"
+};
+
+// Syllabus Units Definition
+const syllabusUnits = [
+  {
+    unitId: "unit-1",
+    unitNumber: "Unit-1",
+    title: "OOP Core & Fundamentals",
+    icon: "fa-cubes",
+    color: "from-blue-600 to-indigo-600",
+    desc: "Classes, Objects, Encapsulation, Polymorphism, Inheritance & Abstract Interfaces",
+    questionCount: 4
+  },
+  {
+    unitId: "unit-2",
+    unitNumber: "Unit-2",
+    title: "Java Collections Framework",
+    icon: "fa-layer-group",
+    color: "from-purple-600 to-pink-600",
+    desc: "List, Set, Map, Queue, Iterators & Comparators",
+    questionCount: 4
+  },
+  {
+    unitId: "unit-3",
+    unitNumber: "Unit-3",
+    title: "Exception Handling",
+    icon: "fa-shield-halved",
+    color: "from-emerald-600 to-teal-600",
+    desc: "Checked/Unchecked Exceptions, Try-Catch-Finally, Throw/Throws & Custom Exceptions",
+    questionCount: 4
+  },
+  {
+    unitId: "unit-4",
+    unitNumber: "Unit-4",
+    title: "File Handling & I/O Streams",
+    icon: "fa-file-code",
+    color: "from-amber-600 to-orange-600",
+    desc: "Byte/Char Streams, Readers/Writers, Object Serialization & NIO",
+    questionCount: 4
+  },
+  {
+    unitId: "unit-5",
+    unitNumber: "Unit-5",
+    title: "Lambda & Functional Programming",
+    icon: "fa-bolt",
+    color: "from-rose-600 to-red-600",
+    desc: "Lambdas, Functional Interfaces, Built-in Interfaces & Method References",
+    questionCount: 4
+  },
+  {
+    unitId: "unit-6",
+    unitNumber: "Unit-6",
+    title: "Java Stream API",
+    icon: "fa-water",
+    color: "from-cyan-600 to-blue-600",
+    desc: "Stream Pipelining, Intermediate & Terminal Operations, Collectors & Parallelism",
+    questionCount: 4
+  }
+];
+
+// Unit-wise Categorized Question Bank
+let questions = [
+  // UNIT 1: OOP Core
+  { id: 101, unitId: "unit-1", subjectCode: "CS201", questionText: "What does JVM stand for in Java runtime?", options: ["Java Virtual Machine", "Java Variable Method", "Joint Virtual Memory", "Java Verified Mechanism"], correctIndex: 0, difficultyLevel: "Easy", marks: 2, explanation: "JVM provides the runtime engine where Java bytecode executes." },
+  { id: 102, unitId: "unit-1", subjectCode: "CS201", questionText: "Which keyword is used to allocate an instance of a class on the heap?", options: ["class", "malloc", "new", "instance"], correctIndex: 2, difficultyLevel: "Easy", marks: 2, explanation: "The 'new' operator allocates memory on the Java heap." },
+  { id: 103, unitId: "unit-1", subjectCode: "CS201", questionText: "What mechanism allows a subclass to provide a specific implementation of a parent method?", options: ["Method Overloading", "Method Overriding", "Dynamic Binding", "Encapsulation"], correctIndex: 1, difficultyLevel: "Medium", marks: 4, explanation: "Method overriding redefines a superclass method in a child class." },
+  { id: 104, unitId: "unit-1", subjectCode: "CS201", questionText: "Why can't an abstract class be instantiated directly with 'new' in Java?", options: ["It lacks memory allocation headers", "It is declared final by default", "It represents an incomplete template designed for subclass inheritance", "It contains static blocks only"], correctIndex: 2, difficultyLevel: "Hard", marks: 6, explanation: "Abstract classes are partial implementations meant to be extended by concrete classes." },
+
+  // UNIT 2: Collections Framework
+  { id: 201, unitId: "unit-2", subjectCode: "CS201", questionText: "Which collection interface allows duplicate elements in Java?", options: ["Set", "List", "Map", "NavigableSet"], correctIndex: 1, difficultyLevel: "Easy", marks: 2, explanation: "List maintains an ordered sequence permitting duplicates." },
+  { id: 202, unitId: "unit-2", subjectCode: "CS201", questionText: "Which collection class guarantees insertion order preservation?", options: ["HashSet", "LinkedHashSet", "TreeSet", "VectorSet"], correctIndex: 1, difficultyLevel: "Medium", marks: 4, explanation: "LinkedHashSet maintains a doubly-linked list running through all its entries." },
+  { id: 203, unitId: "unit-2", subjectCode: "CS201", questionText: "What is the average search time complexity of a balanced AVL Tree / TreeMap?", options: ["O(1)", "O(n)", "O(log n)", "O(n log n)"], correctIndex: 2, difficultyLevel: "Medium", marks: 4, explanation: "Due to height balance, lookup runs in O(log n)." },
+  { id: 204, unitId: "unit-2", subjectCode: "CS201", questionText: "How does HashMap resolve collisions when a bucket size reaches 8 in Java 8+?", options: ["Dynamic linear probing", "Re-hashes with SHA-256", "Converts linked list chain into a Red-Black Tree (TreeNode)", "Spills items to disk"], correctIndex: 2, difficultyLevel: "Hard", marks: 6, explanation: "It treeifies the bucket into a Red-Black tree to preserve O(log n) lookups." },
+
+  // UNIT 3: Exception Handling
+  { id: 301, unitId: "unit-3", subjectCode: "CS201", questionText: "Which block in exception handling executes regardless of whether an exception occurs?", options: ["catch", "try", "finally", "throw"], correctIndex: 2, difficultyLevel: "Easy", marks: 2, explanation: "The 'finally' block always executes for clean-up routines." },
+  { id: 302, unitId: "unit-3", subjectCode: "CS201", questionText: "Which of the following is an unchecked (Runtime) exception in Java?", options: ["IOException", "SQLException", "NullPointerException", "ClassNotFoundException"], correctIndex: 2, difficultyLevel: "Easy", marks: 2, explanation: "NullPointerException extends RuntimeException and is unchecked at compile time." },
+  { id: 303, unitId: "unit-3", subjectCode: "CS201", questionText: "What is the key difference between the keywords 'throw' and 'throws'?", options: ["throw is for checked, throws is for unchecked", "throw explicitly throws an instance; throws declares exceptions in method signature", "throw is deprecated in Java 17", "throws terminates the JVM immediately"], correctIndex: 1, difficultyLevel: "Medium", marks: 4, explanation: "throw initiates an exception object; throws declares possibilities in the method declaration." },
+  { id: 304, unitId: "unit-3", subjectCode: "CS201", questionText: "In try-with-resources, which interface must a custom resource implement to close automatically?", options: ["Closeable", "AutoCloseable", "Serializable", "Finalizable"], correctIndex: 1, difficultyLevel: "Hard", marks: 6, explanation: "AutoCloseable (or Closeable) is required for automatic resource management." },
+
+  // UNIT 4: File Handling & I/O
+  { id: 401, unitId: "unit-4", subjectCode: "CS201", questionText: "Which class is best suited for reading text file data line by line efficiently?", options: ["FileInputStream", "BufferedReader", "DataInputStream", "ByteArrayInputStream"], correctIndex: 1, difficultyLevel: "Easy", marks: 2, explanation: "BufferedReader provides the efficient readLine() method." },
+  { id: 402, unitId: "unit-4", subjectCode: "CS201", questionText: "Which marker interface must a Java class implement to enable object serialization?", options: ["Cloneable", "Serializable", "Comparable", "Readable"], correctIndex: 1, difficultyLevel: "Easy", marks: 2, explanation: "java.io.Serializable marks objects as eligible for byte-stream serialization." },
+  { id: 403, unitId: "unit-4", subjectCode: "CS201", questionText: "What happens to a field marked with the 'transient' modifier during serialization?", options: ["It is encrypted with AES", "It is skipped and not serialized into the byte stream", "It throws NotSerializableException", "It is written to a temporary log file"], correctIndex: 1, difficultyLevel: "Medium", marks: 4, explanation: "Transient variables are ignored during object state serialization." },
+  { id: 404, unitId: "unit-4", subjectCode: "CS201", questionText: "What is the primary architectural advantage of Java NIO Channels over traditional Streams?", options: ["Channels support bidirectional asynchronous non-blocking buffer transfers", "Channels do not require heap memory", "Channels bypass the operating system kernel entirely", "Channels only support text formats"], correctIndex: 0, difficultyLevel: "Hard", marks: 6, explanation: "NIO Channels provide two-way, non-blocking I/O using direct byte buffers." },
+
+  // UNIT 5: Lambda & Functional Programming
+  { id: 501, unitId: "unit-5", subjectCode: "CS201", questionText: "What is the definition of a Functional Interface in Java?", options: ["An interface with at least 5 methods", "An interface having exactly one abstract method", "An interface that has no body", "An interface used solely for serialization"], correctIndex: 1, difficultyLevel: "Easy", marks: 2, explanation: "SAM (Single Abstract Method) interfaces are functional interfaces." },
+  { id: 502, unitId: "unit-5", subjectCode: "CS201", questionText: "Which built-in functional interface accepts an argument and returns a boolean value?", options: ["Consumer<T>", "Supplier<T>", "Predicate<T>", "Function<T, R>"], correctIndex: 2, difficultyLevel: "Medium", marks: 4, explanation: "Predicate<T> defines boolean test(T t)." },
+  { id: 503, unitId: "unit-5", subjectCode: "CS201", questionText: "What is the correct syntax for a method reference pointing to an arbitrary object method?", options: ["Class::method", "Class->method()", "Class.method::ref", "Class#method"], correctIndex: 0, difficultyLevel: "Medium", marks: 4, explanation: "The double colon '::' separator is used for method references." },
+  { id: 504, unitId: "unit-5", subjectCode: "CS201", questionText: "Why can't lambdas access variables from enclosing scopes unless effectively final?", options: ["To preserve concurrency safety and prevent race conditions on stack frame copies", "Because Java bytecode prohibits pointer arithmetic", "To avoid garbage collector overhead", "Because heap allocations must be immutable"], correctIndex: 0, difficultyLevel: "Hard", marks: 6, explanation: "Captured local variables are copied by value into the lambda instance." },
+
+  // UNIT 6: Java Stream API
+  { id: 601, unitId: "unit-6", subjectCode: "CS201", questionText: "Which method is used to convert an existing List into a sequential Stream?", options: ["list.stream()", "Stream.ofList()", "list.toStream()", "Stream.convert(list)"], correctIndex: 0, difficultyLevel: "Easy", marks: 2, explanation: "Collection.stream() produces a sequential stream." },
+  { id: 602, unitId: "unit-6", subjectCode: "CS201", questionText: "In Java Stream API, which of the following is a terminal operation?", options: ["map()", "filter()", "collect()", "peek()"], correctIndex: 2, difficultyLevel: "Medium", marks: 4, explanation: "collect() terminates and evaluates the stream pipeline." },
+  { id: 603, unitId: "unit-6", subjectCode: "CS201", questionText: "What does the intermediate operation 'flatMap()' do compared to 'map()'?", options: ["Sorts all items ascending", "Flattens streams of streams into a single composite stream", "Removes duplicate elements", "Converts stream into parallel mode"], correctIndex: 1, difficultyLevel: "Medium", marks: 4, explanation: "flatMap flattens each generated sub-stream into one continuous stream." },
+  { id: 604, unitId: "unit-6", subjectCode: "CS201", questionText: "What framework does parallelStream() implicitly use under the hood in Java?", options: ["ForkJoinPool.commonPool()", "ThreadPoolExecutor fixed size 4", "Disruptor RingBuffer", "Thread-per-core virtual fiber"], correctIndex: 0, difficultyLevel: "Hard", marks: 6, explanation: "Parallel streams leverage the common ForkJoinPool work-stealing pool." }
+];
+
+let results = [
+  { resultId: 501, studentName: "Aditya Nair", studentId: 1008, quizTitle: "Quiz (Unit-1): OOP Core & Fundamentals", marksObtained: 14, totalMarks: 16, grade: "A", feedback: "Demonstrated strong grasp of polymorphism and method overriding.", date: "2026-10-31" },
+  { resultId: 502, studentName: "Aditya Nair", studentId: 1008, quizTitle: "Quiz (Unit-2): Java Collections Framework", marksObtained: 16, totalMarks: 16, grade: "A+", feedback: "Flawless score across all difficulty tiers in Collections.", date: "2026-11-01" },
+  { resultId: 503, studentName: "Aditya Nair", studentId: 1008, quizTitle: "Quiz (Unit-3): Exception Handling", marksObtained: 12, totalMarks: 16, grade: "B", feedback: "Good effort; revise difference between throw, throws, and try-with-resources.", date: "2026-11-02" }
+];
+
+// Syllabus concepts & topics for the Syllabus tab
+const syllabusTopics = [
+  {
+    unit: "Unit 1",
+    title: "Object-Oriented Programming (OOP) Core",
+    icon: "fa-cubes",
+    color: "from-blue-600 to-indigo-600",
+    topics: [
+      "Classes & Objects",
+      "Encapsulation & Data Hiding",
+      "Inheritance & Polymorphism",
+      "Method Overloading & Overriding",
+      "Abstract Classes & Interfaces"
+    ]
+  },
+  {
+    unit: "Unit 2",
+    title: "Java Collections Framework",
+    icon: "fa-layer-group",
+    color: "from-purple-600 to-pink-600",
+    topics: [
+      "List Interface (ArrayList, LinkedList)",
+      "Set Interface (HashSet, LinkedHashSet, TreeSet)",
+      "Map Interface (HashMap, TreeMap, LinkedHashMap)",
+      "Queue & Deque Interfaces",
+      "Iterators & Comparable / Comparator"
+    ]
+  },
+  {
+    unit: "Unit 3",
+    title: "Exception Handling",
+    icon: "fa-shield-halved",
+    color: "from-emerald-600 to-teal-600",
+    topics: [
+      "Checked vs Unchecked Exceptions",
+      "Try, Catch, Finally Blocks",
+      "Throw & Throws Keywords",
+      "Custom Exception Classes",
+      "Multi-catch & Try-with-Resources"
+    ]
+  },
+  {
+    unit: "Unit 4",
+    title: "File Handling & I/O Streams",
+    icon: "fa-file-code",
+    color: "from-amber-600 to-orange-600",
+    topics: [
+      "Byte Streams & Character Streams",
+      "FileReader & FileWriter",
+      "BufferedReader & BufferedWriter",
+      "Object Serialization & Deserialization",
+      "NIO File Operations"
+    ]
+  },
+  {
+    unit: "Unit 5",
+    title: "Lambda Expressions & Functional Programming",
+    icon: "fa-bolt",
+    color: "from-rose-600 to-red-600",
+    topics: [
+      "Lambda Syntax & Target Typing",
+      "Functional Interfaces (@FunctionalInterface)",
+      "Built-in Interfaces (Predicate, Consumer, Supplier, Function)",
+      "Method References (:: syntax)",
+      "Anonymous Inner Classes vs Lambdas"
+    ]
+  },
+  {
+    unit: "Unit 6",
+    title: "Java Stream API",
+    icon: "fa-water",
+    color: "from-cyan-600 to-blue-600",
+    topics: [
+      "Stream Creation & Pipelining",
+      "Intermediate Operations (filter, map, sorted, distinct)",
+      "Terminal Operations (collect, forEach, count, reduce)",
+      "Collectors & Grouping Operations",
+      "Parallel Streams & Performance"
+    ]
+  }
+];
+
+// --- 2. NAVIGATION & SCREEN CONTROLLERS ---
+
+function openPortal(tabName = 'dashboard') {
+  document.getElementById('landingScreen').classList.add('hidden');
+  document.getElementById('portalScreen').classList.add('hidden');
+  document.getElementById('studentEntryScreen').classList.remove('hidden');
+
+  document.getElementById('reg-name').value = currentStudent.studentName;
+  document.getElementById('reg-email').value = currentStudent.email;
+  document.getElementById('reg-id').value = currentStudent.studentId;
+  document.getElementById('reg-year').value = currentStudent.year;
+  document.getElementById('reg-branch').value = currentStudent.department;
+
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+function exitToLanding() {
+  document.getElementById('studentEntryScreen').classList.add('hidden');
+  document.getElementById('portalScreen').classList.add('hidden');
+  document.getElementById('landingScreen').classList.remove('hidden');
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+function exitPortal() {
+  document.getElementById('portalScreen').classList.add('hidden');
+  document.getElementById('studentEntryScreen').classList.add('hidden');
+  document.getElementById('landingScreen').classList.remove('hidden');
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+function editStudentProfile() {
+  document.getElementById('portalScreen').classList.add('hidden');
+  document.getElementById('studentEntryScreen').classList.remove('hidden');
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+function handleStudentDetailsSubmit(e) {
+  e.preventDefault();
+
+  const name = document.getElementById('reg-name').value.trim();
+  const email = document.getElementById('reg-email').value.trim();
+  const id = parseInt(document.getElementById('reg-id').value);
+  const year = document.getElementById('reg-year').value;
+  const branch = document.getElementById('reg-branch').value;
+
+  const alertBox = document.getElementById('validationAlert');
+  const alertMsg = document.getElementById('validationAlertMsg');
+
+  if (!name || name.length < 2) {
+    alertBox.classList.remove('hidden');
+    alertMsg.innerText = "ValidateService: Student Name must be at least 2 characters long.";
+    return;
+  }
+
+  if (!email.includes('@') || !email.includes('.')) {
+    alertBox.classList.remove('hidden');
+    alertMsg.innerText = "ValidateService.validateEmail(): Invalid email format provided.";
+    return;
+  }
+
+  if (isNaN(id) || id < 1000) {
+    alertBox.classList.remove('hidden');
+    alertMsg.innerText = "ValidateService.validateStudentId(): Student ID must be a numeric value >= 1000.";
+    return;
+  }
+
+  alertBox.classList.add('hidden');
+
+  currentStudent = {
+    studentId: id,
+    studentName: name,
+    email: email,
+    year: year,
+    department: branch
+  };
+
+  updateStudentUI();
+
+  document.getElementById('studentEntryScreen').classList.add('hidden');
+  document.getElementById('portalScreen').classList.remove('hidden');
+  switchTab('dashboard');
+}
+
+function updateStudentUI() {
+  const headName = document.getElementById('header-student-name');
+  const headId = document.getElementById('header-student-id');
+  if (headName) headName.innerText = currentStudent.studentName;
+  if (headId) headId.innerText = `ID: ${currentStudent.studentId}`;
+
+  const dashName = document.getElementById('dash-greeting-name');
+  const dashBranch = document.getElementById('dash-greeting-branch');
+  const dashYear = document.getElementById('dash-greeting-year');
+  const dashId = document.getElementById('dash-greeting-id');
+  if (dashName) dashName.innerText = currentStudent.studentName;
+  if (dashBranch) dashBranch.innerText = currentStudent.department;
+  if (dashYear) dashYear.innerText = currentStudent.year;
+  if (dashId) dashId.innerText = `#${currentStudent.studentId}`;
+
+  const examCandidate = document.getElementById('result-candidate-info');
+  if (examCandidate) {
+    examCandidate.innerText = `Candidate: ${currentStudent.studentName} (Student ID: ${currentStudent.studentId} • ${currentStudent.department} • ${currentStudent.year})`;
+  }
+
+  const repName = document.getElementById('rep-student-name');
+  const repId = document.getElementById('rep-student-id');
+  const repBranch = document.getElementById('rep-student-branch');
+  const repYear = document.getElementById('rep-student-year');
+  const repGridBranch = document.getElementById('rep-grid-branch');
+  const repGridYear = document.getElementById('rep-grid-year');
+  if (repName) repName.innerText = currentStudent.studentName;
+  if (repId) repId.innerText = currentStudent.studentId;
+  if (repBranch) repBranch.innerText = currentStudent.department;
+  if (repYear) repYear.innerText = currentStudent.year;
+  if (repGridBranch) repGridBranch.innerText = currentStudent.department;
+  if (repGridYear) repGridYear.innerText = currentStudent.year;
+}
+
+function switchTab(tabId) {
+  document.querySelectorAll('.tab-content').forEach(el => el.classList.add('hidden'));
+  const activeSection = document.getElementById('tab-' + tabId);
+  if (activeSection) activeSection.classList.remove('hidden');
+
+  document.querySelectorAll('.nav-btn').forEach(btn => {
+    btn.className = "nav-btn flex items-center space-x-1.5 px-3 py-2 rounded-lg text-xs sm:text-sm font-medium transition-all text-slate-400 hover:text-slate-200 hover:bg-slate-800/60";
+  });
+  const activeNav = document.getElementById('nav-' + tabId);
+  if (activeNav) {
+    activeNav.className = "nav-btn flex items-center space-x-1.5 px-3 py-2 rounded-lg text-xs sm:text-sm font-medium transition-all bg-indigo-600 text-white font-semibold shadow-md shadow-indigo-600/30";
+  }
+
+  if (tabId === 'quiz') renderUnitQuizCards();
+  if (tabId === 'syllabus') renderSyllabus();
+  if (tabId === 'reports') renderResultsTable();
+}
+
+// --- 3. LIVE ADAPTIVE EXAM ENGINE STATE ---
+
+let examState = {
+  active: false,
+  selectedUnit: 'all',
+  selectedUnitTitle: 'Comprehensive Adaptive Exam',
+  maxQuestions: 24,
+  currentDifficulty: 'Medium',
+  answeredQuestionIds: [],
+  currentQuestion: null,
+  selectedOption: null,
+  sessionLog: [],
+  streakCorrect: 0,
+  streakErrors: 0,
+  timerSeconds: 1500, // 25 minutes default
+  timerInterval: null
+};
+
+// Render Unit Quizzes in the Live Exam Tab
+function renderUnitQuizCards() {
+  const container = document.getElementById('unit-quiz-cards');
+  if (!container) return;
+  container.innerHTML = '';
+
+  syllabusUnits.forEach(u => {
+    const card = document.createElement('div');
+    card.className = "bg-slate-900 border border-slate-800 hover:border-indigo-500/50 p-5 rounded-2xl transition-all hover:bg-slate-850 group flex flex-col justify-between";
+    card.innerHTML = `
+      <div>
+        <div class="flex items-center justify-between mb-3">
+          <div class="h-10 w-10 rounded-xl bg-gradient-to-tr ${u.color} text-white flex items-center justify-center shadow-md">
+            <i class="fa-solid ${u.icon} text-sm"></i>
+          </div>
+          <span class="text-[10px] font-bold font-mono uppercase px-2 py-0.5 rounded-full bg-slate-950 border border-slate-800 text-indigo-400">
+            Quiz (${u.unitNumber})
+          </span>
+        </div>
+        <h4 class="font-bold text-slate-100 text-sm mb-1">${u.title}</h4>
+        <p class="text-xs text-slate-400 leading-relaxed">${u.desc}</p>
+      </div>
+
+      <div class="pt-4 mt-4 border-t border-slate-800/80 flex items-center justify-between">
+        <span class="text-[11px] text-slate-500">
+          <i class="fa-solid fa-layer-group text-slate-600 mr-1"></i> Easy • Med • Hard
+        </span>
+        <button onclick="startQuizSession('${u.unitId}')" class="px-3.5 py-1.5 rounded-xl bg-indigo-600 hover:bg-indigo-500 text-white font-semibold text-xs transition-all flex items-center gap-1.5 shadow-md shadow-indigo-600/20 group-hover:scale-105">
+          <span>Start Quiz</span>
+          <i class="fa-solid fa-play text-[10px]"></i>
+        </button>
+      </div>
+    `;
+    container.appendChild(card);
+  });
+}
+
+function startQuizSession(unitId = 'all') {
+  examState.active = true;
+  examState.selectedUnit = unitId;
+
+  if (unitId === 'all') {
+    examState.selectedUnitTitle = "Full All-Units Adaptive Quiz";
+    examState.maxQuestions = 24;
+    examState.timerSeconds = 1500; // 25 minutes
+  } else {
+    const found = syllabusUnits.find(u => u.unitId === unitId);
+    examState.selectedUnitTitle = found ? `Quiz (${found.unitNumber}): ${found.title}` : "Adaptive Unit Quiz";
+    examState.maxQuestions = 4;
+    examState.timerSeconds = 300; // 5 minutes
+  }
+
+  examState.currentDifficulty = 'Medium';
+  examState.answeredQuestionIds = [];
+  examState.sessionLog = [];
+  examState.streakCorrect = 0;
+  examState.streakErrors = 0;
+  examState.selectedOption = null;
+
+  document.getElementById('quiz-idle').classList.add('hidden');
+  document.getElementById('quiz-completed').classList.add('hidden');
+  document.getElementById('quiz-running').classList.remove('hidden');
+
+  document.getElementById('quiz-total-target').innerText = examState.maxQuestions;
+  document.getElementById('quiz-unit-badge').innerText = examState.selectedUnitTitle;
+  document.getElementById('telemetry-unit').innerText = examState.selectedUnit === 'all' ? 'All Units (Full - 24 Qs)' : syllabusUnits.find(u => u.unitId === unitId)?.unitNumber || 'Unit';
+
+  const initialMins = Math.floor(examState.timerSeconds / 60).toString().padStart(2, '0');
+  const initialSecs = (examState.timerSeconds % 60).toString().padStart(2, '0');
+  document.getElementById('quiz-timer').innerText = `${initialMins}:${initialSecs}`;
+
+  updateFeedbackBanner("Starting session at baseline difficulty: MEDIUM", "neutral");
+  updateTelemetry();
+
+  // Start timer countdown
+  clearInterval(examState.timerInterval);
+  examState.timerInterval = setInterval(() => {
+    if (examState.timerSeconds <= 0) {
+      clearInterval(examState.timerInterval);
+      finishQuiz();
+    } else {
+      examState.timerSeconds--;
+      const m = Math.floor(examState.timerSeconds / 60).toString().padStart(2, '0');
+      const s = (examState.timerSeconds % 60).toString().padStart(2, '0');
+      document.getElementById('quiz-timer').innerText = `${m}:${s}`;
+    }
+  }, 1000);
+
+  loadNextAdaptiveQuestion();
+}
+
+function cancelActiveQuiz() {
+  if (confirm("Are you sure you want to exit the current exam? Progress will not be saved.")) {
+    clearInterval(examState.timerInterval);
+    returnToUnitSelection();
+  }
+}
+
+function returnToUnitSelection() {
+  document.getElementById('quiz-running').classList.add('hidden');
+  document.getElementById('quiz-completed').classList.add('hidden');
+  document.getElementById('quiz-idle').classList.remove('hidden');
+  renderUnitQuizCards();
+}
+
+function loadNextAdaptiveQuestion() {
+  examState.selectedOption = null;
+  document.getElementById('btn-submit-answer').disabled = true;
+
+  // Filter pool based on selected unit + current difficulty + not yet answered
+  let pool = questions;
+  if (examState.selectedUnit !== 'all') {
+    pool = questions.filter(q => q.unitId === examState.selectedUnit);
+  }
+
+  let candidates = pool.filter(q => q.difficultyLevel === examState.currentDifficulty && !examState.answeredQuestionIds.includes(q.id));
+  
+  // Fallback if current difficulty tier is exhausted
+  if (candidates.length === 0) {
+    candidates = pool.filter(q => !examState.answeredQuestionIds.includes(q.id));
+  }
+
+  // If candidates run out or reached max questions
+  if (candidates.length === 0 || examState.answeredQuestionIds.length >= examState.maxQuestions) {
+    finishQuiz();
+    return;
+  }
+
+  const q = candidates[Math.floor(Math.random() * candidates.length)];
+  examState.currentQuestion = q;
+
+  document.getElementById('quiz-q-num').innerText = examState.answeredQuestionIds.length + 1;
+  document.getElementById('quiz-question-text').innerText = q.questionText;
+
+  const unitObj = syllabusUnits.find(u => u.unitId === q.unitId);
+  document.getElementById('quiz-question-unit-label').innerText = unitObj ? `${unitObj.unitNumber} • ${unitObj.title}` : `Topic: ${q.subjectCode}`;
+
+  const badge = document.getElementById('quiz-diff-badge');
+  badge.innerText = `${q.difficultyLevel} Tier (${q.marks} Marks)`;
+  badge.className = `text-[10px] font-bold uppercase px-2.5 py-1 rounded-full ${
+    q.difficultyLevel === 'Easy' ? 'bg-emerald-500/20 text-emerald-300 border border-emerald-500/30' :
+    q.difficultyLevel === 'Medium' ? 'bg-amber-500/20 text-amber-300 border border-amber-500/30' :
+    'bg-rose-500/20 text-rose-300 border border-rose-500/30'
+  }`;
+
+  // Options rendering
+  const container = document.getElementById('quiz-options-container');
+  container.innerHTML = '';
+  q.options.forEach((opt, idx) => {
+    const btn = document.createElement('button');
+    btn.className = "w-full p-4 rounded-xl text-left text-xs sm:text-sm font-medium transition-all flex items-center justify-between border bg-slate-950/60 border-slate-800 text-slate-300 hover:border-slate-700";
+    btn.onclick = () => selectQuizOption(idx, btn);
+    btn.innerHTML = `
+      <div class="flex items-center space-x-3">
+        <span class="h-6 w-6 rounded-lg flex items-center justify-center text-xs font-mono font-bold bg-slate-800 text-slate-400">
+          ${String.fromCharCode(65 + idx)}
+        </span>
+        <span>${opt}</span>
+      </div>
+      <span class="check-icon hidden text-indigo-400"><i class="fa-solid fa-circle-check"></i></span>
+    `;
+    container.appendChild(btn);
+  });
+
+  updateTelemetry();
+}
+
+function selectQuizOption(idx, buttonElement) {
+  examState.selectedOption = idx;
+  document.getElementById('btn-submit-answer').disabled = false;
+
+  const allBtns = document.getElementById('quiz-options-container').querySelectorAll('button');
+  allBtns.forEach(b => {
+    b.className = "w-full p-4 rounded-xl text-left text-xs sm:text-sm font-medium transition-all flex items-center justify-between border bg-slate-950/60 border-slate-800 text-slate-300 hover:border-slate-700";
+    b.querySelector('.check-icon').classList.add('hidden');
+  });
+
+  buttonElement.className = "w-full p-4 rounded-xl text-left text-xs sm:text-sm font-medium transition-all flex items-center justify-between border bg-indigo-600/20 border-indigo-500 text-white shadow-md shadow-indigo-600/10";
+  buttonElement.querySelector('.check-icon').classList.remove('hidden');
+}
+
+function submitAnswer() {
+  if (examState.selectedOption === null || !examState.currentQuestion) return;
+
+  const q = examState.currentQuestion;
+  const isCorrect = examState.selectedOption === q.correctIndex;
+  const earned = isCorrect ? q.marks : 0;
+
+  examState.sessionLog.push({
+    id: q.id,
+    text: q.questionText,
+    difficulty: q.difficultyLevel,
+    marksAllocated: q.marks,
+    earnedMarks: earned,
+    isCorrect: isCorrect,
+    explanation: q.explanation
+  });
+
+  examState.answeredQuestionIds.push(q.id);
+
+  // Adaptive Adjustment Algorithm
+  if (isCorrect) {
+    examState.streakCorrect++;
+    examState.streakErrors = 0;
+    if (examState.currentDifficulty === 'Easy') {
+      examState.currentDifficulty = 'Medium';
+      updateFeedbackBanner("Correct! Engine escalated difficulty: EASY → MEDIUM.", "up");
+    } else if (examState.currentDifficulty === 'Medium') {
+      examState.currentDifficulty = 'Hard';
+      updateFeedbackBanner("Great! Engine escalated difficulty: MEDIUM → HARD.", "up");
+    } else {
+      updateFeedbackBanner("Flawless! Retained at peak HARD tier.", "up");
+    }
+  } else {
+    examState.streakErrors++;
+    examState.streakCorrect = 0;
+    if (examState.currentDifficulty === 'Hard') {
+      examState.currentDifficulty = 'Medium';
+      updateFeedbackBanner("Incorrect. Engine lowered difficulty: HARD → MEDIUM.", "down");
+    } else if (examState.currentDifficulty === 'Medium') {
+      examState.currentDifficulty = 'Easy';
+      updateFeedbackBanner("Incorrect. Engine lowered difficulty: MEDIUM → EASY.", "down");
+    } else {
+      updateFeedbackBanner("Incorrect. Sustaining on EASY for recovery.", "down");
+    }
+  }
+
+  if (examState.answeredQuestionIds.length >= examState.maxQuestions) {
+    finishQuiz();
+  } else {
+    loadNextAdaptiveQuestion();
+  }
+}
+
+function finishQuiz() {
+  clearInterval(examState.timerInterval);
+  document.getElementById('quiz-running').classList.add('hidden');
+  document.getElementById('quiz-completed').classList.remove('hidden');
+
+  const totalEarned = examState.sessionLog.reduce((a, b) => a + b.earnedMarks, 0);
+  const totalPossible = examState.sessionLog.reduce((a, b) => a + b.marksAllocated, 0);
+  const pct = totalPossible > 0 ? Math.round((totalEarned / totalPossible) * 100) : 0;
+  const correctCount = examState.sessionLog.filter(x => x.isCorrect).length;
+
+  let grade = pct >= 85 ? "A+" : pct >= 70 ? "A" : pct >= 50 ? "B" : "C";
+
+  document.getElementById('result-quiz-title').innerText = `${examState.selectedUnitTitle} Results`;
+  document.getElementById('result-score').innerText = `${totalEarned} / ${totalPossible}`;
+  document.getElementById('result-accuracy').innerText = `${pct}%`;
+  document.getElementById('result-correct-count').innerText = `${correctCount} / ${examState.sessionLog.length}`;
+  document.getElementById('result-grade').innerText = grade;
+
+  // Add to Results Registry
+  results.unshift({
+    resultId: 500 + results.length + 1,
+    studentName: currentStudent.studentName,
+    studentId: currentStudent.studentId,
+    quizTitle: examState.selectedUnitTitle,
+    marksObtained: totalEarned,
+    totalMarks: totalPossible,
+    grade: grade,
+    feedback: pct >= 75 ? "Consistent performance across adaptive questions." : "Review core unit concepts.",
+    date: new Date().toISOString().split("T")[0]
+  });
+
+  // Path Trace
+  const breakdown = document.getElementById('result-breakdown');
+  breakdown.innerHTML = '';
+  examState.sessionLog.forEach((item, i) => {
+    const div = document.createElement('div');
+    div.className = `p-4 rounded-xl border text-xs sm:text-sm ${item.isCorrect ? 'bg-emerald-950/20 border-emerald-800/40' : 'bg-rose-950/20 border-rose-800/40'}`;
+    div.innerHTML = `
+      <div class="flex items-center justify-between mb-2">
+        <div class="flex items-center space-x-2">
+          <span class="font-bold text-slate-300">Q${i + 1}.</span>
+          <span class="px-2 py-0.5 rounded text-[10px] font-bold uppercase ${item.difficulty === 'Easy' ? 'bg-emerald-500/20 text-emerald-300' : item.difficulty === 'Medium' ? 'bg-amber-500/20 text-amber-300' : 'bg-rose-500/20 text-rose-300'}">
+            ${item.difficulty} (${item.marksAllocated} pts)
+          </span>
+        </div>
+        <span class="font-bold ${item.isCorrect ? 'text-emerald-400' : 'text-rose-400'}">
+          <i class="fa-solid ${item.isCorrect ? 'fa-check' : 'fa-xmark'} mr-1"></i>
+          ${item.earnedMarks} / ${item.marksAllocated} Marks
+        </span>
+      </div>
+      <p class="text-slate-200 font-medium mb-1">${item.text}</p>
+      <p class="text-xs text-slate-400 italic"><strong>Explanation:</strong> ${item.explanation}</p>
+    `;
+    breakdown.appendChild(div);
+  });
+}
+
+function updateFeedbackBanner(msg, type) {
+  const banner = document.getElementById('quiz-feedback-banner');
+  document.getElementById('quiz-feedback-text').innerText = msg;
+  if (type === 'up') {
+    banner.className = "p-3 rounded-xl text-xs flex items-center space-x-2 border bg-emerald-950/40 border-emerald-800/60 text-emerald-300";
+  } else if (type === 'down') {
+    banner.className = "p-3 rounded-xl text-xs flex items-center space-x-2 border bg-amber-950/40 border-amber-800/60 text-amber-300";
+  } else {
+    banner.className = "p-3 rounded-xl text-xs flex items-center space-x-2 border bg-slate-900 border-slate-800 text-slate-300";
+  }
+}
+
+function updateTelemetry() {
+  document.getElementById('telemetry-diff').innerText = examState.currentDifficulty;
+  document.getElementById('telemetry-streak').innerText = examState.streakCorrect;
+  document.getElementById('telemetry-errors').innerText = examState.streakErrors;
+}
+
+// --- 4. SYLLABUS RENDERER ---
+
+function renderSyllabus() {
+  const container = document.getElementById('syllabus-container');
+  if (!container) return;
+  container.innerHTML = '';
+  syllabusTopics.forEach(item => {
+    const div = document.createElement('div');
+    div.className = "bg-slate-900 border border-slate-800 hover:border-slate-750 rounded-2xl p-5 shadow-lg space-y-4 transition-all";
+    div.innerHTML = `
+      <div class="flex items-center space-x-3 border-b border-slate-800 pb-3">
+        <div class="h-10 w-10 rounded-xl bg-gradient-to-tr ${item.color} flex items-center justify-center text-white shadow-md">
+          <i class="fa-solid ${item.icon} text-sm"></i>
+        </div>
+        <div>
+          <span class="text-[10px] font-bold font-mono uppercase text-indigo-400 tracking-wider">${item.unit}</span>
+          <h4 class="font-bold text-slate-100 text-sm leading-snug">${item.title}</h4>
+        </div>
+      </div>
+
+      <div class="space-y-2 pt-1">
+        <span class="text-[11px] font-bold uppercase tracking-wider text-slate-500 block">Topics / Concepts:</span>
+        <ul class="space-y-1.5 text-xs text-slate-300">
+          ${item.topics.map(t => `
+            <li class="flex items-start space-x-2 bg-slate-950/70 p-2 rounded-lg border border-slate-850">
+              <i class="fa-solid fa-circle-dot text-[8px] text-indigo-400 mt-1"></i>
+              <span>${t}</span>
+            </li>
+          `).join('')}
+        </ul>
+      </div>
+    `;
+    container.appendChild(div);
+  });
+}
+
+// --- 5. RESULTS & REPORTS REGISTRY ---
+
+function renderResultsTable() {
+  const tbody = document.getElementById('results-table-body');
+  if (!tbody) return;
+  tbody.innerHTML = '';
+
+  // Filter results STRICTLY for current authenticated student
+  const studentResults = results.filter(res => res.studentId === currentStudent.studentId);
+
+  const counter = document.getElementById('user-attempt-counter');
+  if (counter) counter.innerText = `${studentResults.length} Attempt${studentResults.length === 1 ? '' : 's'}`;
+
+  const label = document.getElementById('table-filter-student-label');
+  if (label) label.innerText = `${currentStudent.studentName} (ID: ${currentStudent.studentId})`;
+
+  if (studentResults.length === 0) {
+    tbody.innerHTML = `
+      <tr>
+        <td colspan="6" class="p-8 text-center text-slate-500">
+          <i class="fa-solid fa-clock-rotate-left text-2xl text-slate-600 block mb-2"></i>
+          <span>No quizzes completed yet by ${currentStudent.studentName}.</span>
+          <div class="mt-3">
+            <button onclick="switchTab('quiz')" class="px-4 py-2 bg-indigo-600 hover:bg-indigo-500 text-white rounded-xl text-xs font-semibold">
+              <i class="fa-solid fa-play mr-1"></i> Take a Quiz Now
+            </button>
+          </div>
+        </td>
+      </tr>
+    `;
+    return;
+  }
+
+  studentResults.forEach(res => {
+    const tr = document.createElement('tr');
+    tr.className = "hover:bg-slate-850 transition-colors";
+    tr.innerHTML = `
+      <td class="p-3.5 font-mono text-indigo-400 font-bold">#${res.resultId}</td>
+      <td class="p-3.5 text-slate-200 font-medium">
+        <span class="block">${res.quizTitle}</span>
+        <span class="text-[10px] text-slate-500 font-mono">Candidate ID: ${res.studentId}</span>
+      </td>
+      <td class="p-3.5 font-mono font-bold text-slate-100">${res.marksObtained} / ${res.totalMarks}</td>
+      <td class="p-3.5">
+        <span class="px-2 py-0.5 rounded text-[10px] font-bold ${
+          res.grade === 'A+' || res.grade === 'A' ? 'bg-emerald-500/20 text-emerald-300 border border-emerald-500/30' :
+          res.grade === 'B' ? 'bg-amber-500/20 text-amber-300 border border-amber-500/30' :
+          'bg-rose-500/20 text-rose-300 border border-rose-500/30'
+        }">
+          ${res.grade}
+        </span>
+      </td>
+      <td class="p-3.5 text-slate-300 max-w-xs">${res.feedback}</td>
+      <td class="p-3.5 text-slate-500 font-mono">${res.date}</td>
+    `;
+    tbody.appendChild(tr);
+  });
+}
+
+// Initial render call on load
+window.addEventListener('DOMContentLoaded', () => {
+  updateStudentUI();
+  renderUnitQuizCards();
+  renderSyllabus();
+  renderResultsTable();
+});
