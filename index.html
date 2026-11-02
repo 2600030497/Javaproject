@@ -1,1 +1,970 @@
-"# Javaproject" 
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ExamSphere - Adaptive Quiz & Exam Engine</title>
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            brandDark: '#030712',
+            surfaceDark: '#0f172a',
+            surfaceBorder: '#1e293b'
+          }
+        }
+      }
+    }
+  </script>
+  <!-- Font Awesome CDN -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <!-- External Stylesheet -->
+  <link rel="stylesheet" href="style.css">
+</head>
+<body class="bg-slate-950 text-slate-100 font-sans selection:bg-indigo-500 selection:text-white min-h-screen flex flex-col custom-scroll">
+
+  <!-- ================================================================= -->
+  <!-- 1. LANDING / HERO ENTRANCE SCREEN                                -->
+  <!-- ================================================================= -->
+  <div id="landingScreen" class="min-h-screen flex flex-col justify-between relative bg-[radial-gradient(ellipse_80%_80%_at_50%_-20%,rgba(99,102,241,0.22),rgba(255,255,255,0))]">
+    <!-- Ambient Light Spheres -->
+    <div class="ambient-glow absolute top-1/4 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[550px] h-[350px] bg-indigo-600/15 rounded-full blur-3xl pointer-events-none"></div>
+    <div class="ambient-glow absolute bottom-10 left-1/4 w-[350px] h-[250px] bg-rose-500/10 rounded-full blur-3xl pointer-events-none"></div>
+    <div class="ambient-glow absolute top-1/3 right-1/4 w-[300px] h-[250px] bg-cyan-500/10 rounded-full blur-3xl pointer-events-none"></div>
+
+    <!-- Top Minimal Navigation -->
+    <header class="w-full max-w-7xl mx-auto px-6 py-6 flex items-center justify-between z-10">
+      <div class="flex items-center space-x-3 cursor-pointer" onclick="openPortal('dashboard')">
+        <div class="h-10 w-10 rounded-xl bg-gradient-to-tr from-indigo-500 to-rose-500 flex items-center justify-center shadow-lg shadow-indigo-500/25">
+          <i class="fa-solid fa-brain text-white text-lg"></i>
+        </div>
+        <span class="font-extrabold text-xl tracking-tight text-white">
+          ExamSphere<span class="text-indigo-400">.</span>
+        </span>
+      </div>
+
+      <div class="flex items-center space-x-3">
+        <span class="hidden sm:inline-flex items-center text-xs text-slate-400 font-mono bg-slate-900/80 px-3.5 py-1.5 rounded-full border border-slate-800">
+          <span class="w-2 h-2 rounded-full bg-emerald-400 animate-ping mr-2"></span>
+          Java OOP Core Engine
+        </span>
+        <button onclick="openPortal('dashboard')" class="text-xs font-semibold px-4 py-2 rounded-xl bg-slate-900 hover:bg-slate-850 border border-slate-800 hover:border-slate-700 text-slate-200 transition-all flex items-center gap-2">
+          <span>Direct Access</span>
+          <i class="fa-solid fa-chevron-right text-indigo-400 text-[10px]"></i>
+        </button>
+      </div>
+    </header>
+
+    <!-- Centered Hero Body -->
+    <main class="max-w-5xl mx-auto px-6 py-12 sm:py-20 text-center z-10 flex flex-col items-center justify-center my-auto">
+      <!-- Badge -->
+      <div class="inline-flex items-center space-x-2 px-4 py-1.5 rounded-full bg-indigo-500/10 border border-indigo-500/30 text-indigo-300 text-xs font-semibold tracking-wide mb-6 shadow-sm">
+        <i class="fa-solid fa-wand-magic-sparkles text-indigo-400 text-xs"></i>
+        <span>Project #3 • Problem Solving Through Programming [Java]</span>
+      </div>
+
+      <!-- Main Headline -->
+      <h1 class="text-4xl sm:text-6xl lg:text-7xl font-black tracking-tight text-white leading-[1.1] max-w-4xl">
+        ExamSphere
+        <span class="block mt-2 bg-gradient-to-r from-indigo-300 via-purple-300 to-rose-300 bg-clip-text text-transparent">
+          Adaptive Quiz & Exam Engine
+        </span>
+      </h1>
+
+      <!-- Description -->
+      <p class="mt-6 text-sm sm:text-lg text-slate-300 max-w-2xl font-normal leading-relaxed">
+        An intelligent, real-time assessment architecture modeled on Java Object-Oriented Programming. Evaluates student responses dynamically—escalating or de-escalating question difficulties across Easy, Medium, and Hard tiers for every syllabus unit.
+      </p>
+
+      <!-- Primary Action Buttons -->
+      <div class="mt-10 flex flex-col sm:flex-row items-center gap-4">
+        <button onclick="openPortal('dashboard')" class="group relative inline-flex items-center justify-center px-8 py-4 font-bold text-sm sm:text-base text-white transition-all duration-300 bg-gradient-to-r from-indigo-500 via-purple-600 to-rose-500 rounded-2xl shadow-xl shadow-indigo-500/30 hover:shadow-indigo-500/50 hover:scale-105 active:scale-95">
+          <span class="flex items-center space-x-3">
+            <span>Enter Portal</span>
+            <i class="fa-solid fa-arrow-right transition-transform group-hover:translate-x-1"></i>
+          </span>
+          <span class="absolute inset-0 rounded-2xl bg-white/20 opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none"></span>
+        </button>
+
+        <button onclick="openPortal('syllabus')" class="px-6 py-4 rounded-2xl bg-slate-900/80 hover:bg-slate-800 text-slate-300 text-sm font-semibold border border-slate-800 hover:border-slate-700 transition-all flex items-center space-x-2">
+          <i class="fa-solid fa-book-open text-indigo-400"></i>
+          <span>View Course Syllabus</span>
+        </button>
+      </div>
+
+      <!-- Capability Cards -->
+      <div class="mt-16 sm:mt-24 grid grid-cols-1 md:grid-cols-3 gap-5 w-full text-left">
+        <div class="p-5 rounded-2xl bg-slate-900/60 border border-slate-800/80 hover:border-indigo-500/40 backdrop-blur-sm transition-all group">
+          <div class="h-10 w-10 rounded-xl bg-indigo-500/10 border border-indigo-500/20 text-indigo-400 flex items-center justify-center mb-3 group-hover:bg-indigo-500/20 transition-all">
+            <i class="fa-solid fa-microchip text-base"></i>
+          </div>
+          <h3 class="font-bold text-slate-100 text-sm">Unit-Wise Adaptive Tests</h3>
+          <p class="text-xs text-slate-400 mt-1.5 leading-relaxed">
+            Unit-specific adaptive quizzes: Unit-1 (OOP), Unit-2 (Collections), Unit-3 (Exceptions), Unit-4 (File I/O), Unit-5 (Lambdas), Unit-6 (Streams).
+          </p>
+        </div>
+
+        <div class="p-5 rounded-2xl bg-slate-900/60 border border-slate-800/80 hover:border-purple-500/40 backdrop-blur-sm transition-all group">
+          <div class="h-10 w-10 rounded-xl bg-purple-500/10 border border-purple-500/20 text-purple-400 flex items-center justify-center mb-3 group-hover:bg-purple-500/20 transition-all">
+            <i class="fa-solid fa-wand-magic-sparkles text-base"></i>
+          </div>
+          <h3 class="font-bold text-slate-100 text-sm">Dynamic Calibration</h3>
+          <p class="text-xs text-slate-400 mt-1.5 leading-relaxed">
+            Automatic level switching: correct answers step up to Hard tier (6 pts), errors step down to Medium/Easy tier for concept reinforcement.
+          </p>
+        </div>
+
+        <div class="p-5 rounded-2xl bg-slate-900/60 border border-slate-800/80 hover:border-emerald-500/40 backdrop-blur-sm transition-all group">
+          <div class="h-10 w-10 rounded-xl bg-emerald-500/10 border border-emerald-500/20 text-emerald-400 flex items-center justify-center mb-3 group-hover:bg-emerald-500/20 transition-all">
+            <i class="fa-solid fa-chart-line text-base"></i>
+          </div>
+          <h3 class="font-bold text-slate-100 text-sm">Analysis & Reporting</h3>
+          <p class="text-xs text-slate-400 mt-1.5 leading-relaxed">
+            Instant grade calculation, detailed performance explanation trace, and printable progress cards powered by Java Stream operations.
+          </p>
+        </div>
+      </div>
+    </main>
+
+    <!-- Hero Footer -->
+    <footer class="w-full border-t border-slate-900/80 py-6 text-center text-xs text-slate-500 z-10">
+      ExamSphere • Project 3 Specification Guide • Problem Solving Through Programming [Java]
+    </footer>
+  </div>
+
+  <!-- ================================================================= -->
+  <!-- 1.5. STUDENT REGISTRATION & DETAILS ENTRY SCREEN (MODULES 1 & 6)  -->
+  <!-- ================================================================= -->
+  <div id="studentEntryScreen" class="hidden min-h-screen flex flex-col justify-between relative bg-[radial-gradient(ellipse_80%_80%_at_50%_-20%,rgba(99,102,241,0.22),rgba(255,255,255,0))]">
+    <!-- Top Nav with Back Button -->
+    <header class="w-full max-w-5xl mx-auto px-6 py-6 flex items-center justify-between z-10">
+      <div class="flex items-center space-x-3 cursor-pointer" onclick="exitToLanding()">
+        <div class="h-10 w-10 rounded-xl bg-gradient-to-tr from-indigo-500 to-rose-500 flex items-center justify-center shadow-lg shadow-indigo-500/25">
+          <i class="fa-solid fa-brain text-white text-lg"></i>
+        </div>
+        <span class="font-extrabold text-xl tracking-tight text-white">
+          ExamSphere<span class="text-indigo-400">.</span>
+        </span>
+      </div>
+
+      <button onclick="exitToLanding()" class="px-3.5 py-1.5 rounded-xl bg-slate-900 hover:bg-slate-800 border border-slate-800 text-slate-300 text-xs font-semibold flex items-center gap-2 transition-all">
+        <i class="fa-solid fa-arrow-left text-indigo-400 text-xs"></i>
+        <span>Back to Home</span>
+      </button>
+    </header>
+
+    <!-- Main Registration Card -->
+    <main class="max-w-xl w-full mx-auto px-6 py-8 z-10 my-auto">
+      <div class="bg-slate-900/90 border border-slate-800 rounded-3xl p-6 sm:p-8 shadow-2xl backdrop-blur-md relative overflow-hidden">
+        
+        <!-- Header -->
+        <div class="space-y-2 text-center pb-6 border-b border-slate-800/80">
+          <div class="inline-flex items-center space-x-2 px-3 py-1 rounded-full bg-indigo-500/10 border border-indigo-500/20 text-indigo-400 text-xs font-semibold">
+            <i class="fa-solid fa-id-card text-xs"></i>
+            <span>Module 1: Student Module • registerStudent()</span>
+          </div>
+          <h2 class="text-2xl sm:text-3xl font-extrabold text-white tracking-tight">
+            Student Authentication
+          </h2>
+          <p class="text-xs sm:text-sm text-slate-400">
+            Please enter your candidate credentials before accessing the adaptive exam portal.
+          </p>
+        </div>
+
+        <!-- Student Form -->
+        <form id="studentRegistrationForm" onsubmit="handleStudentDetailsSubmit(event)" class="space-y-4 pt-6 text-xs">
+          
+          <!-- Validation Alert Box (ValidateService) -->
+          <div id="validationAlert" class="hidden p-3 rounded-xl border border-rose-500/30 bg-rose-500/10 text-rose-300 text-xs flex items-center gap-2">
+            <i class="fa-solid fa-circle-exclamation text-rose-400 text-sm"></i>
+            <span id="validationAlertMsg">Please fill all credentials correctly.</span>
+          </div>
+
+          <!-- Name / Username -->
+          <div>
+            <label class="text-slate-300 font-semibold block mb-1.5 flex items-center justify-between">
+              <span>Candidate Name / Username <span class="text-rose-400">*</span></span>
+              <span class="text-[10px] text-slate-500 font-mono">String studentName</span>
+            </label>
+            <div class="relative">
+              <i class="fa-solid fa-user absolute left-3.5 top-3 text-slate-500 text-xs"></i>
+              <input type="text" id="reg-name" required placeholder="e.g., Aditya Nair" class="w-full bg-slate-950 border border-slate-800 focus:border-indigo-500 rounded-xl pl-9 pr-3 py-2.5 text-slate-200 placeholder-slate-600 focus:outline-none transition-all">
+            </div>
+          </div>
+
+          <!-- Email -->
+          <div>
+            <label class="text-slate-300 font-semibold block mb-1.5 flex items-center justify-between">
+              <span>Official Email Address <span class="text-rose-400">*</span></span>
+              <span class="text-[10px] text-slate-500 font-mono">validateEmail()</span>
+            </label>
+            <div class="relative">
+              <i class="fa-solid fa-envelope absolute left-3.5 top-3 text-slate-500 text-xs"></i>
+              <input type="email" id="reg-email" required placeholder="e.g., aditya.n@campus.edu" class="w-full bg-slate-950 border border-slate-800 focus:border-indigo-500 rounded-xl pl-9 pr-3 py-2.5 text-slate-200 placeholder-slate-600 focus:outline-none transition-all">
+            </div>
+          </div>
+
+          <!-- Row: Student ID & Year -->
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            <div>
+              <label class="text-slate-300 font-semibold block mb-1.5 flex items-center justify-between">
+                <span>Student ID <span class="text-rose-400">*</span></span>
+                <span class="text-[10px] text-slate-500 font-mono">int studentId</span>
+              </label>
+              <div class="relative">
+                <i class="fa-solid fa-hashtag absolute left-3.5 top-3 text-slate-500 text-xs"></i>
+                <input type="number" id="reg-id" required min="1000" max="99999" placeholder="e.g., 1008" class="w-full bg-slate-950 border border-slate-800 focus:border-indigo-500 rounded-xl pl-9 pr-3 py-2.5 text-slate-200 placeholder-slate-600 focus:outline-none font-mono transition-all">
+              </div>
+            </div>
+
+            <div>
+              <label class="text-slate-300 font-semibold block mb-1.5 flex items-center justify-between">
+                <span>Academic Year <span class="text-rose-400">*</span></span>
+                <span class="text-[10px] text-slate-500 font-mono">int year</span>
+              </label>
+              <div class="relative">
+                <i class="fa-solid fa-calendar-check absolute left-3.5 top-3 text-slate-500 text-xs"></i>
+                <select id="reg-year" required class="w-full bg-slate-950 border border-slate-800 focus:border-indigo-500 rounded-xl pl-9 pr-3 py-2.5 text-slate-200 focus:outline-none transition-all">
+                  <option value="1st Year">1st Year (Freshman)</option>
+                  <option value="2nd Year">2nd Year (Sophomore)</option>
+                  <option value="3rd Year" selected>3rd Year (Junior)</option>
+                  <option value="4th Year">4th Year (Senior)</option>
+                </select>
+              </div>
+            </div>
+          </div>
+
+          <!-- Branch / Department -->
+          <div>
+            <label class="text-slate-300 font-semibold block mb-1.5 flex items-center justify-between">
+              <span>Branch / Department <span class="text-rose-400">*</span></span>
+              <span class="text-[10px] text-slate-500 font-mono">String department</span>
+            </label>
+            <div class="relative">
+              <i class="fa-solid fa-graduation-cap absolute left-3.5 top-3 text-slate-500 text-xs"></i>
+              <select id="reg-branch" required class="w-full bg-slate-950 border border-slate-800 focus:border-indigo-500 rounded-xl pl-9 pr-3 py-2.5 text-slate-200 focus:outline-none transition-all">
+                <option value="Computer Science">Computer Science & Engineering (CSE)</option>
+                <option value="Information Technology">Information Technology (IT)</option>
+                <option value="Electronics & Comm.">Electronics & Communication Engineering (ECE)</option>
+                <option value="Electrical Engineering">Electrical & Electronics Engineering (EEE)</option>
+                <option value="Mechanical Engineering">Mechanical Engineering (ME)</option>
+                <option value="Data Science & AI">Data Science & Artificial Intelligence</option>
+              </select>
+            </div>
+          </div>
+
+          <!-- Submit Button -->
+          <div class="pt-4">
+            <button type="submit" class="w-full py-3.5 bg-gradient-to-r from-indigo-500 via-purple-600 to-rose-500 hover:opacity-95 text-white font-bold rounded-xl text-sm shadow-xl shadow-indigo-500/25 flex items-center justify-center space-x-2 transition-all hover:scale-[1.01] active:scale-[0.99]">
+              <span>Validate Credentials & Enter Portal</span>
+              <i class="fa-solid fa-arrow-right text-xs"></i>
+            </button>
+          </div>
+        </form>
+
+        <!-- OOP Verification Note -->
+        <div class="mt-6 pt-4 border-t border-slate-800/80 text-[11px] text-slate-500 text-center flex items-center justify-center gap-1.5">
+          <i class="fa-solid fa-shield-halved text-emerald-400"></i>
+          <span>Data validated via <code>ValidateService.validateStudentId()</code> and <code>validateEmail()</code></span>
+        </div>
+
+      </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="w-full border-t border-slate-900/80 py-4 text-center text-xs text-slate-500 z-10">
+      ExamSphere • Student Registration Gateway
+    </footer>
+  </div>
+
+  <!-- ================================================================= -->
+  <!-- 2. PORTAL SYSTEM APPLICATION                                      -->
+  <!-- ================================================================= -->
+  <div id="portalScreen" class="hidden min-h-screen flex flex-col bg-slate-950">
+    <!-- Portal Header -->
+    <header class="border-b border-slate-800 bg-slate-900/90 backdrop-blur-md sticky top-0 z-50">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
+        
+        <!-- Logo -->
+        <div class="flex items-center space-x-3 cursor-pointer" onclick="switchTab('dashboard')">
+          <div class="h-10 w-10 rounded-xl bg-gradient-to-tr from-indigo-500 to-rose-500 flex items-center justify-center shadow-lg shadow-indigo-500/20">
+            <i class="fa-solid fa-brain text-white text-base"></i>
+          </div>
+          <div>
+            <div class="flex items-center space-x-2">
+              <span class="font-extrabold text-lg tracking-tight bg-gradient-to-r from-white via-indigo-200 to-indigo-400 bg-clip-text text-transparent">
+                ExamSphere
+              </span>
+              <span class="text-[10px] uppercase font-bold tracking-wider px-2 py-0.5 rounded-full bg-indigo-500/20 text-indigo-300 border border-indigo-500/30">
+                Portal
+              </span>
+            </div>
+            <p class="text-[11px] text-slate-400 hidden sm:block">Adaptive Quiz & Exam Engine • Java Core OOP</p>
+          </div>
+        </div>
+
+        <!-- Navigation Tabs + Back to Home -->
+        <div class="flex items-center space-x-2">
+          <nav class="flex items-center space-x-1 sm:space-x-2">
+            <button onclick="switchTab('dashboard')" id="nav-dashboard" class="nav-btn flex items-center space-x-1.5 px-3 py-2 rounded-lg text-xs sm:text-sm font-medium transition-all bg-indigo-600 text-white font-semibold shadow-md shadow-indigo-600/30">
+              <i class="fa-solid fa-house text-xs"></i>
+              <span class="hidden md:inline">Dashboard</span>
+            </button>
+            <button onclick="switchTab('quiz')" id="nav-quiz" class="nav-btn flex items-center space-x-1.5 px-3 py-2 rounded-lg text-xs sm:text-sm font-medium transition-all text-slate-400 hover:text-slate-200 hover:bg-slate-800/60">
+              <i class="fa-solid fa-play text-xs"></i>
+              <span class="hidden md:inline">Live Exam</span>
+            </button>
+            <button onclick="switchTab('syllabus')" id="nav-syllabus" class="nav-btn flex items-center space-x-1.5 px-3 py-2 rounded-lg text-xs sm:text-sm font-medium transition-all text-slate-400 hover:text-slate-200 hover:bg-slate-800/60">
+              <i class="fa-solid fa-graduation-cap text-xs"></i>
+              <span class="hidden md:inline">Syllabus</span>
+            </button>
+            <button onclick="switchTab('analytics')" id="nav-analytics" class="nav-btn flex items-center space-x-1.5 px-3 py-2 rounded-lg text-xs sm:text-sm font-medium transition-all text-slate-400 hover:text-slate-200 hover:bg-slate-800/60">
+              <i class="fa-solid fa-chart-pie text-xs"></i>
+              <span class="hidden md:inline">Analytics</span>
+            </button>
+            <button onclick="switchTab('reports')" id="nav-reports" class="nav-btn flex items-center space-x-1.5 px-3 py-2 rounded-lg text-xs sm:text-sm font-medium transition-all text-slate-400 hover:text-slate-200 hover:bg-slate-800/60">
+              <i class="fa-solid fa-clock-rotate-left text-xs"></i>
+              <span class="hidden md:inline">Previous Quizzes</span>
+            </button>
+          </nav>
+
+          <div class="h-6 w-[1px] bg-slate-800 mx-1 hidden sm:block"></div>
+
+          <!-- Student Profile Chip in Portal Header -->
+          <div onclick="editStudentProfile()" title="Click to view/change student profile" class="hidden sm:flex items-center gap-2 px-3 py-1.5 rounded-xl bg-slate-900 border border-slate-800 hover:border-indigo-500/50 cursor-pointer transition-all">
+            <div class="w-6 h-6 rounded-lg bg-indigo-500/20 text-indigo-400 flex items-center justify-center text-xs">
+              <i class="fa-solid fa-user-graduate"></i>
+            </div>
+            <div class="text-left leading-tight">
+              <span id="header-student-name" class="text-xs font-bold text-slate-200 block truncate max-w-[100px]">Aditya Nair</span>
+              <span id="header-student-id" class="text-[10px] text-slate-500 font-mono">ID: 1008</span>
+            </div>
+          </div>
+
+          <!-- Return to Home -->
+          <button onclick="exitPortal()" title="Return to Landing Screen" class="px-3 py-2 rounded-lg text-xs text-slate-400 hover:text-white bg-slate-900 border border-slate-800 hover:border-slate-700 transition-colors flex items-center gap-1.5">
+            <i class="fa-solid fa-arrow-left text-indigo-400"></i>
+            <span class="hidden sm:inline">Home</span>
+          </button>
+        </div>
+
+      </div>
+    </header>
+
+    <!-- Main Dynamic Tab Content Holder -->
+    <main class="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-6">
+
+      <!-- ============================================================= -->
+      <!-- TAB 1: DASHBOARD VIEW                                         -->
+      <!-- ============================================================= -->
+      <section id="tab-dashboard" class="tab-content space-y-6">
+        <!-- Hero Welcome -->
+        <div class="bg-gradient-to-r from-slate-900 via-indigo-950/40 to-slate-900 border border-slate-800 rounded-3xl p-6 sm:p-8 shadow-xl relative overflow-hidden">
+          <div class="max-w-2xl space-y-3">
+            <div class="inline-flex items-center space-x-2 px-3 py-1 rounded-full bg-emerald-500/10 border border-emerald-500/20 text-emerald-400 text-xs font-semibold">
+              <i class="fa-solid fa-check-circle"></i>
+              <span>Active Student Profile Authenticated</span>
+            </div>
+            <h2 class="text-2xl sm:text-3xl font-extrabold text-white">
+              Welcome back, <span id="dash-greeting-name" class="text-indigo-400">Aditya Nair</span>!
+            </h2>
+            <p class="text-xs sm:text-sm text-slate-300 leading-relaxed">
+              Candidate profile synchronized: <strong id="dash-greeting-branch" class="text-white">Computer Science</strong> (<span id="dash-greeting-year">3rd Year</span>) • Student ID: <strong id="dash-greeting-id" class="text-white font-mono">#1008</strong>.
+            </p>
+          </div>
+
+          <div class="mt-6 flex flex-wrap items-center gap-3">
+            <button onclick="switchTab('quiz')" class="px-5 py-2.5 rounded-xl bg-gradient-to-r from-indigo-500 to-rose-500 text-white font-semibold text-xs shadow-md shadow-indigo-500/20 hover:scale-[1.02] transition-all flex items-center gap-2">
+              <i class="fa-solid fa-play"></i>
+              <span>Select Unit-Wise Live Exam</span>
+            </button>
+            <button onclick="editStudentProfile()" class="px-4 py-2.5 rounded-xl bg-slate-950 border border-slate-800 text-slate-300 hover:text-white text-xs font-semibold flex items-center gap-2">
+              <i class="fa-solid fa-user-pen text-indigo-400"></i>
+              <span>Update Student Details</span>
+            </button>
+            <button onclick="switchTab('syllabus')" class="px-4 py-2.5 rounded-xl bg-slate-950 border border-slate-800 text-slate-300 hover:text-white text-xs font-semibold flex items-center gap-2">
+              <i class="fa-solid fa-book-open"></i>
+              <span>View Exam Syllabus</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- Metrics Cards -->
+        <div class="grid grid-cols-2 lg:grid-cols-4 gap-4">
+          <div class="bg-slate-900 border border-slate-800 rounded-2xl p-4">
+            <span class="text-xs text-slate-400 block mb-1">Available Units</span>
+            <span class="text-2xl font-black text-indigo-400">6 Units</span>
+            <span class="text-[11px] text-slate-500 block mt-1">Dedicated Adaptive Quizzes</span>
+          </div>
+
+          <div class="bg-slate-900 border border-slate-800 rounded-2xl p-4">
+            <span class="text-xs text-slate-400 block mb-1">Total Question Bank</span>
+            <span id="stat-total-q" class="text-2xl font-black text-emerald-400">24 Questions</span>
+            <span class="text-[11px] text-slate-500 block mt-1">Easy, Medium, Hard Tiers</span>
+          </div>
+
+          <div class="bg-slate-900 border border-slate-800 rounded-2xl p-4">
+            <span class="text-xs text-slate-400 block mb-1">Average Score</span>
+            <span id="stat-avg-score" class="text-2xl font-black text-amber-400">84.2%</span>
+            <span class="text-[11px] text-slate-500 block mt-1">Computed via Stream API</span>
+          </div>
+
+          <div class="bg-slate-900 border border-slate-800 rounded-2xl p-4">
+            <span class="text-xs text-slate-400 block mb-1">Adaptive AI Engine</span>
+            <span class="text-2xl font-black text-rose-400">Active</span>
+            <span class="text-[11px] text-slate-500 block mt-1">Dynamic difficulty balancing</span>
+          </div>
+        </div>
+
+        <!-- Operations Navigation Cards -->
+        <div class="space-y-3">
+          <h3 class="text-sm font-bold uppercase tracking-wider text-slate-400">
+            System Operations & Modules
+          </h3>
+          <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+            
+            <div onclick="switchTab('quiz')" class="bg-slate-900 border border-slate-800 hover:border-indigo-500/50 p-5 rounded-2xl cursor-pointer transition-all hover:bg-slate-850 group">
+              <div class="flex items-center justify-between mb-3">
+                <div class="p-2.5 rounded-xl bg-indigo-500/10 text-indigo-400">
+                  <i class="fa-solid fa-play text-base"></i>
+                </div>
+                <i class="fa-solid fa-chevron-right text-slate-600 group-hover:text-indigo-400 group-hover:translate-x-1 transition-all"></i>
+              </div>
+              <h4 class="font-bold text-slate-100 text-sm">Unit-Wise Live Exams</h4>
+              <p class="text-xs text-slate-400 mt-1 leading-relaxed">
+                Take Quiz(Unit-1), Quiz(Unit-2), or comprehensive assessments with live difficulty adaptation.
+              </p>
+            </div>
+
+            <div onclick="switchTab('syllabus')" class="bg-slate-900 border border-slate-800 hover:border-indigo-500/50 p-5 rounded-2xl cursor-pointer transition-all hover:bg-slate-850 group">
+              <div class="flex items-center justify-between mb-3">
+                <div class="p-2.5 rounded-xl bg-indigo-500/10 text-indigo-400">
+                  <i class="fa-solid fa-graduation-cap text-base"></i>
+                </div>
+                <i class="fa-solid fa-chevron-right text-slate-600 group-hover:text-indigo-400 group-hover:translate-x-1 transition-all"></i>
+              </div>
+              <h4 class="font-bold text-slate-100 text-sm">Course Syllabus & Concepts</h4>
+              <p class="text-xs text-slate-400 mt-1 leading-relaxed">
+                Review all units and topics covered in the Java programming curriculum.
+              </p>
+            </div>
+
+            <div onclick="switchTab('analytics')" class="bg-slate-900 border border-slate-800 hover:border-emerald-500/50 p-5 rounded-2xl cursor-pointer transition-all hover:bg-slate-850 group">
+              <div class="flex items-center justify-between mb-3">
+                <div class="p-2.5 rounded-xl bg-emerald-500/10 text-emerald-400">
+                  <i class="fa-solid fa-chart-column text-base"></i>
+                </div>
+                <i class="fa-solid fa-chevron-right text-slate-600 group-hover:text-emerald-400 group-hover:translate-x-1 transition-all"></i>
+              </div>
+              <h4 class="font-bold text-slate-100 text-sm">AnalysisService Analytics</h4>
+              <p class="text-xs text-slate-400 mt-1 leading-relaxed">
+                Department percentiles, top performer analysis, and tier-wise accuracy telemetry.
+              </p>
+            </div>
+
+            <div onclick="switchTab('reports')" class="bg-slate-900 border border-slate-800 hover:border-teal-500/50 p-5 rounded-2xl cursor-pointer transition-all hover:bg-slate-850 group">
+              <div class="flex items-center justify-between mb-3">
+                <div class="p-2.5 rounded-xl bg-teal-500/10 text-teal-400">
+                  <i class="fa-solid fa-clock-rotate-left text-base"></i>
+                </div>
+                <i class="fa-solid fa-chevron-right text-slate-600 group-hover:text-teal-400 group-hover:translate-x-1 transition-all"></i>
+              </div>
+              <h4 class="font-bold text-slate-100 text-sm">Previous Quizzes & History</h4>
+              <p class="text-xs text-slate-400 mt-1 leading-relaxed">
+                Review your past quiz attempts, scores obtained, assigned grades, and detailed feedback.
+              </p>
+            </div>
+
+          </div>
+        </div>
+      </section>
+
+      <!-- ============================================================= -->
+      <!-- TAB 2: LIVE EXAM (UNIT-WISE ADAPTIVE QUIZZES)                  -->
+      <!-- ============================================================= -->
+      <section id="tab-quiz" class="tab-content hidden space-y-6">
+        
+        <!-- Sub-State A: Quiz Idle / Unit Selection Grid -->
+        <div id="quiz-idle" class="space-y-6">
+          <div class="bg-slate-900 border border-slate-800 rounded-3xl p-6 sm:p-8 shadow-2xl relative overflow-hidden">
+            <div class="max-w-3xl space-y-3">
+              <div class="inline-flex items-center space-x-2 px-3 py-1 rounded-full bg-indigo-500/10 border border-indigo-500/20 text-indigo-400 text-xs font-semibold">
+                <i class="fa-solid fa-wand-magic-sparkles text-xs"></i>
+                <span>Adaptive Testing Center • Select Your Quiz</span>
+              </div>
+              <h3 class="text-2xl sm:text-3xl font-extrabold text-white">
+                Unit-Wise Adaptive Examinations
+              </h3>
+              <p class="text-xs sm:text-sm text-slate-300 leading-relaxed">
+                Choose a specific unit quiz below or take the <strong>Full All-Units Comprehensive Quiz</strong>. Every exam starts at baseline <strong>Medium difficulty (4 Marks)</strong>. Your answers trigger real-time adaptation: correct answers promote you to <strong>Hard tier (6 Marks)</strong>, while errors adjust down to <strong>Easy tier (2 Marks)</strong> for foundational recovery.
+              </p>
+            </div>
+          </div>
+
+          <!-- Unit Quizzes Cards Grid -->
+          <div class="space-y-4">
+            <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
+              <h4 class="text-xs font-bold uppercase tracking-wider text-slate-400">
+                Available Examinations & Adaptive Quizzes
+              </h4>
+              <button onclick="startQuizSession('all')" class="text-xs font-semibold text-rose-300 hover:text-white bg-rose-500/10 hover:bg-rose-500/20 border border-rose-500/30 px-3 py-1.5 rounded-xl transition-all flex items-center gap-1.5 w-fit">
+                <i class="fa-solid fa-bolt text-rose-400"></i>
+                <span>Fast Launch: Full All-Units Quiz</span>
+              </button>
+            </div>
+
+            <!-- Featured Full All-Units Grand Quiz Card -->
+            <div class="p-6 rounded-3xl bg-gradient-to-r from-indigo-950/70 via-purple-950/60 to-rose-950/70 border-2 border-indigo-500/40 hover:border-indigo-400 shadow-2xl shadow-indigo-950/50 transition-all relative overflow-hidden group">
+              <div class="absolute -right-10 -bottom-10 w-44 h-44 bg-indigo-500/10 rounded-full blur-2xl pointer-events-none group-hover:scale-125 transition-transform"></div>
+              
+              <div class="flex flex-col md:flex-row md:items-center justify-between gap-6 relative z-10">
+                <div class="space-y-2 max-w-2xl">
+                  <div class="flex items-center space-x-2.5">
+                    <span class="px-3 py-1 rounded-full text-[10px] font-mono font-extrabold uppercase bg-rose-500/20 text-rose-300 border border-rose-500/40">
+                      ★ Grand Comprehensive Exam
+                    </span>
+                    <span class="px-2.5 py-0.5 rounded-full text-[10px] font-mono text-indigo-300 bg-indigo-500/15 border border-indigo-500/30">
+                      Unit-1 to Unit-6
+                    </span>
+                  </div>
+                  <h3 class="text-xl sm:text-2xl font-black text-white">
+                    Full All-Units Adaptive Quiz
+                  </h3>
+                  <p class="text-xs sm:text-sm text-slate-300 leading-relaxed">
+                    Evaluates cross-cutting questions dynamically selected from all 6 syllabus units (OOP Core, Collections, Exceptions, File I/O, Lambdas, and Stream API). Cross-domain difficulty balancing automatically adapts with every answer.
+                  </p>
+                  <div class="flex flex-wrap items-center gap-4 text-slate-400 text-xs pt-1">
+                    <span class="flex items-center gap-1.5">
+                      <i class="fa-solid fa-list-check text-indigo-400"></i>
+                      <span>All 6 Units (24 Questions)</span>
+                    </span>
+                    <span class="flex items-center gap-1.5">
+                      <i class="fa-solid fa-sliders text-purple-400"></i>
+                      <span>Dynamic Calibration</span>
+                    </span>
+                    <span class="flex items-center gap-1.5">
+                      <i class="fa-solid fa-clock text-amber-400"></i>
+                      <span>25 Minutes Limit</span>
+                    </span>
+                  </div>
+                </div>
+
+                <div class="flex flex-col sm:flex-row md:flex-col items-stretch md:items-end justify-center gap-2 shrink-0">
+                  <button onclick="startQuizSession('all')" class="px-6 py-3.5 rounded-2xl bg-gradient-to-r from-indigo-500 via-purple-600 to-rose-500 hover:opacity-95 text-white font-bold text-xs sm:text-sm shadow-xl shadow-indigo-500/30 flex items-center justify-center space-x-2 transition-all hover:scale-105 active:scale-95">
+                    <i class="fa-solid fa-play text-xs"></i>
+                    <span>Start All-Units Quiz</span>
+                  </button>
+                  <span class="text-[10px] text-slate-400 text-center md:text-right font-mono">Starts at Medium Tier (4 pts)</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- Unit Quizzes Grid Header -->
+            <div class="pt-2">
+              <span class="text-[11px] font-bold uppercase tracking-wider text-slate-500 block mb-3">
+                Unit-Specific Practice Quizzes (4 Questions Each):
+              </span>
+              <div id="unit-quiz-cards" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                <!-- Dynamically populated unit cards -->
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Sub-State B: Quiz Running -->
+        <div id="quiz-running" class="hidden grid grid-cols-1 lg:grid-cols-3 gap-6">
+          <div class="lg:col-span-2 space-y-4">
+            <!-- Top Status Bar -->
+            <div class="bg-slate-900 border border-slate-800 rounded-2xl p-4 flex flex-wrap items-center justify-between gap-3">
+              <div class="flex items-center space-x-3">
+                <span class="text-xs font-mono text-slate-400">
+                  Question <strong id="quiz-q-num" class="text-white text-sm">1</strong> of <span id="quiz-total-target" class="text-slate-300">24</span>
+                </span>
+                <span id="quiz-unit-badge" class="text-[10px] font-bold uppercase px-2.5 py-1 rounded-full bg-indigo-500/20 text-indigo-300 border border-indigo-500/30">
+                  Quiz (Unit-1)
+                </span>
+                <span id="quiz-diff-badge" class="text-[10px] font-bold uppercase px-2.5 py-1 rounded-full bg-amber-500/20 text-amber-300 border border-amber-500/30">
+                  Medium Tier (4 Marks)
+                </span>
+              </div>
+
+              <div class="flex items-center space-x-2 text-xs font-mono text-slate-300 bg-slate-950 px-3 py-1.5 rounded-xl border border-slate-800">
+                <i class="fa-solid fa-clock text-indigo-400"></i>
+                <span id="quiz-timer">25:00</span>
+              </div>
+            </div>
+
+            <!-- Feedback Alert Banner -->
+            <div id="quiz-feedback-banner" class="p-3 rounded-xl text-xs flex items-center space-x-2 border bg-slate-900 border-slate-800 text-slate-300">
+              <i class="fa-solid fa-microchip text-indigo-400"></i>
+              <span id="quiz-feedback-text">Starting session at baseline difficulty: MEDIUM</span>
+            </div>
+
+            <!-- Question Card -->
+            <div class="bg-slate-900 border border-slate-800 rounded-2xl p-6 space-y-6 shadow-xl">
+              <div class="space-y-1">
+                <span id="quiz-question-unit-label" class="text-[11px] font-mono text-slate-500 uppercase tracking-wider block">Unit Topic</span>
+                <h4 id="quiz-question-text" class="text-base sm:text-lg font-bold text-white leading-relaxed">
+                  Loading adaptive question...
+                </h4>
+              </div>
+
+              <div id="quiz-options-container" class="space-y-3">
+                <!-- Dynamically populated options -->
+              </div>
+
+              <div class="pt-2 flex items-center justify-between">
+                <button onclick="cancelActiveQuiz()" class="px-4 py-2 text-xs text-slate-500 hover:text-slate-300 transition-colors">
+                  Exit Exam
+                </button>
+                <button id="btn-submit-answer" onclick="submitAnswer()" disabled class="px-6 py-3 bg-indigo-600 hover:bg-indigo-500 disabled:opacity-40 disabled:cursor-not-allowed text-white font-bold rounded-xl text-xs sm:text-sm flex items-center space-x-2 shadow-lg transition-all">
+                  <span>Confirm & Next Adaptive Item</span>
+                  <i class="fa-solid fa-chevron-right text-xs"></i>
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Adaptive Telemetry Sidebar -->
+          <div class="space-y-4">
+            <div class="bg-slate-900 border border-slate-800 rounded-2xl p-5 space-y-4 shadow-xl">
+              <div class="flex items-center space-x-2 border-b border-slate-800 pb-3">
+                <i class="fa-solid fa-brain text-indigo-400"></i>
+                <h4 class="font-bold text-xs uppercase tracking-wider text-slate-200">
+                  Adaptive Engine Telemetry
+                </h4>
+              </div>
+
+              <div class="space-y-3 text-xs">
+                <div class="flex justify-between p-2.5 rounded-lg bg-slate-950 border border-slate-800/80">
+                  <span class="text-slate-400">Active Test</span>
+                  <span id="telemetry-unit" class="font-bold text-indigo-400">Quiz (Unit-1)</span>
+                </div>
+                <div class="flex justify-between p-2.5 rounded-lg bg-slate-950 border border-slate-800/80">
+                  <span class="text-slate-400">Current Difficulty</span>
+                  <span id="telemetry-diff" class="font-bold text-amber-400">Medium</span>
+                </div>
+                <div class="flex justify-between p-2.5 rounded-lg bg-slate-950 border border-slate-800/80">
+                  <span class="text-slate-400">Consecutive Correct</span>
+                  <span id="telemetry-streak" class="font-bold text-emerald-400">0</span>
+                </div>
+                <div class="flex justify-between p-2.5 rounded-lg bg-slate-950 border border-slate-800/80">
+                  <span class="text-slate-400">Consecutive Errors</span>
+                  <span id="telemetry-errors" class="font-bold text-rose-400">0</span>
+                </div>
+              </div>
+
+              <div class="text-[11px] text-slate-400 leading-relaxed border-t border-slate-800/80 pt-3">
+                <strong class="text-slate-300">Calibration Rules:</strong>
+                <pre class="mt-1.5 p-2 bg-slate-950 rounded-lg text-[10px] font-mono text-slate-300 overflow-x-auto border border-slate-800">
+if (answer == true) {
+  increaseDifficulty(); // -> Hard (6 pts)
+} else {
+  decreaseDifficulty(); // -> Easy (2 pts)
+}</pre>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Sub-State C: Quiz Completed / Results -->
+        <div id="quiz-completed" class="hidden bg-slate-900 border border-slate-800 rounded-2xl p-6 sm:p-8 shadow-2xl relative overflow-hidden">
+          <div class="relative z-10 space-y-6">
+            <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-slate-800 pb-6">
+              <div>
+                <span class="text-xs uppercase tracking-wider font-bold text-emerald-400 bg-emerald-500/10 px-3 py-1 rounded-full border border-emerald-500/20">
+                  Assessment Concluded
+                </span>
+                <h3 id="result-quiz-title" class="text-2xl sm:text-3xl font-extrabold text-white mt-2">
+                  Quiz (Unit-1) Results
+                </h3>
+                <p id="result-candidate-info" class="text-xs sm:text-sm text-slate-400 mt-1">
+                  Candidate: Aditya Nair (ID: 1008)
+                </p>
+              </div>
+
+              <div class="flex items-center space-x-3">
+                <button onclick="returnToUnitSelection()" class="px-4 py-2 bg-indigo-600 hover:bg-indigo-500 text-white rounded-xl text-xs sm:text-sm font-semibold flex items-center space-x-2 shadow-lg shadow-indigo-600/20">
+                  <i class="fa-solid fa-list-check text-xs"></i>
+                  <span>Select Another Unit Quiz</span>
+                </button>
+                <button onclick="switchTab('reports')" class="px-4 py-2 bg-slate-800 hover:bg-slate-700 text-slate-200 rounded-xl text-xs sm:text-sm font-medium border border-slate-700 flex items-center space-x-2">
+                  <i class="fa-solid fa-clock-rotate-left text-xs"></i>
+                  <span>View in Previous Quizzes</span>
+                </button>
+              </div>
+            </div>
+
+            <!-- Score Cards -->
+            <div class="grid grid-cols-2 sm:grid-cols-4 gap-4">
+              <div class="bg-slate-950 p-4 rounded-xl border border-slate-800">
+                <span class="text-xs text-slate-400 block">Marks Obtained</span>
+                <span id="result-score" class="text-2xl font-black text-indigo-400">0 / 0</span>
+              </div>
+              <div class="bg-slate-950 p-4 rounded-xl border border-slate-800">
+                <span class="text-xs text-slate-400 block">Accuracy Ratio</span>
+                <span id="result-accuracy" class="text-2xl font-black text-emerald-400">0%</span>
+              </div>
+              <div class="bg-slate-950 p-4 rounded-xl border border-slate-800">
+                <span class="text-xs text-slate-400 block">Questions Solved</span>
+                <span id="result-correct-count" class="text-2xl font-black text-slate-200">0 / 24</span>
+              </div>
+              <div class="bg-slate-950 p-4 rounded-xl border border-slate-800">
+                <span class="text-xs text-slate-400 block">Assigned Grade</span>
+                <span id="result-grade" class="text-2xl font-black text-amber-400">B</span>
+              </div>
+            </div>
+
+            <!-- Step by step answers breakdown -->
+            <div class="space-y-3 pt-2">
+              <h4 class="text-sm font-bold uppercase tracking-wider text-slate-400">
+                Adaptive Path Trace & Answer Verification
+              </h4>
+              <div id="result-breakdown" class="space-y-3">
+                <!-- Dynamically populated -->
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </section>
+
+      <!-- ============================================================= -->
+      <!-- TAB 3: SYLLABUS VIEW                                          -->
+      <!-- ============================================================= -->
+      <section id="tab-syllabus" class="tab-content hidden space-y-6">
+        <div class="bg-slate-900 border border-slate-800 rounded-2xl p-6 shadow-xl">
+          <div class="max-w-2xl">
+            <span class="text-xs uppercase font-bold text-indigo-400 tracking-wider">Academic Curriculum</span>
+            <h3 class="text-2xl font-extrabold text-white mt-1">Course Syllabus & Units</h3>
+            <p class="text-sm text-slate-400 mt-2">
+              Covers core Java Object-Oriented Programming, Exception Handling, Collections Framework, I/O Streams, and Modern Functional Programming APIs.
+            </p>
+          </div>
+        </div>
+
+        <div id="syllabus-container" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+          <!-- Dynamically populated syllabus units -->
+        </div>
+      </section>
+
+      <!-- ============================================================= -->
+      <!-- TAB 4: ANALYTICS (ANALYSISSERVICE MODULE)                     -->
+      <!-- ============================================================= -->
+      <section id="tab-analytics" class="tab-content hidden space-y-6">
+        <div class="bg-slate-900 border border-slate-800 rounded-2xl p-6 shadow-xl">
+          <div class="max-w-2xl">
+            <span class="text-xs uppercase font-bold text-purple-400 tracking-wider">AnalysisService Module</span>
+            <h3 class="text-2xl font-extrabold text-white mt-1">Adaptive Learning Analytics</h3>
+            <p class="text-sm text-slate-400 mt-2">
+              Computes average scores, department metrics, top performers, and difficulty distributions using Java Streams & Collection pipelines.
+            </p>
+          </div>
+        </div>
+
+        <!-- Quick Stat Cards -->
+        <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+          <div class="bg-slate-900 border border-slate-800 rounded-2xl p-5">
+            <span class="text-xs text-slate-400 block mb-1">calculateAverageScore()</span>
+            <div class="flex items-baseline space-x-2">
+              <span class="text-3xl font-extrabold text-indigo-400">84.2%</span>
+              <span class="text-xs text-emerald-400 font-medium">+4.2% vs last term</span>
+            </div>
+            <span class="text-[11px] text-slate-500 block mt-1">Across all completed adaptive exams</span>
+          </div>
+
+          <div class="bg-slate-900 border border-slate-800 rounded-2xl p-5">
+            <span class="text-xs text-slate-400 block mb-1">identifyTopPerformer()</span>
+            <span class="text-lg font-bold text-emerald-400 block truncate">
+              Diya Patel
+            </span>
+            <span class="text-xs text-slate-400">
+              Score: 26 / 26 (Grade: A+)
+            </span>
+          </div>
+
+          <div class="bg-slate-900 border border-slate-800 rounded-2xl p-5">
+            <span class="text-xs text-slate-400 block mb-1">Active Question Tiers</span>
+            <div class="flex items-center space-x-3 text-xs mt-2">
+              <span class="text-emerald-400 font-bold">8 Easy</span>
+              <span class="text-amber-400 font-bold">8 Med</span>
+              <span class="text-rose-400 font-bold">8 Hard</span>
+            </div>
+            <span class="text-[11px] text-slate-500 block mt-1">Balanced adaptive question distribution</span>
+          </div>
+        </div>
+
+        <!-- Department Wise Analysis -->
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+          <div class="bg-slate-900 border border-slate-800 rounded-2xl p-6 space-y-4">
+            <div class="flex items-center justify-between">
+              <h4 class="font-bold text-sm text-slate-200">departmentWiseAnalysis()</h4>
+              <span class="text-xs text-slate-500 font-mono">Stream & Map Pipeline</span>
+            </div>
+
+            <div class="space-y-4 pt-2">
+              <div class="space-y-1.5">
+                <div class="flex justify-between text-xs">
+                  <span class="text-slate-300 font-medium">Computer Science (CSE)</span>
+                  <span class="font-mono text-indigo-400 font-bold">86.4%</span>
+                </div>
+                <div class="h-2.5 w-full bg-slate-950 rounded-full overflow-hidden">
+                  <div class="h-full bg-gradient-to-r from-indigo-500 to-rose-500 rounded-full" style="width: 86.4%"></div>
+                </div>
+              </div>
+
+              <div class="space-y-1.5">
+                <div class="flex justify-between text-xs">
+                  <span class="text-slate-300 font-medium">Information Technology (IT)</span>
+                  <span class="font-mono text-indigo-400 font-bold">81.0%</span>
+                </div>
+                <div class="h-2.5 w-full bg-slate-950 rounded-full overflow-hidden">
+                  <div class="h-full bg-gradient-to-r from-indigo-500 to-rose-500 rounded-full" style="width: 81%"></div>
+                </div>
+              </div>
+
+              <div class="space-y-1.5">
+                <div class="flex justify-between text-xs">
+                  <span class="text-slate-300 font-medium">Electronics & Communication (ECE)</span>
+                  <span class="font-mono text-indigo-400 font-bold">78.5%</span>
+                </div>
+                <div class="h-2.5 w-full bg-slate-950 rounded-full overflow-hidden">
+                  <div class="h-full bg-gradient-to-r from-indigo-500 to-rose-500 rounded-full" style="width: 78.5%"></div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Adaptive Difficulty Accuracy -->
+          <div class="bg-slate-900 border border-slate-800 rounded-2xl p-6 space-y-4">
+            <div class="flex items-center justify-between">
+              <h4 class="font-bold text-sm text-slate-200">difficultyWisePerformance()</h4>
+              <span class="text-xs text-slate-500 font-mono">Engine Accuracy</span>
+            </div>
+
+            <div class="space-y-3 pt-2 text-xs">
+              <div class="p-3 bg-slate-950 rounded-xl border border-slate-800 flex items-center justify-between">
+                <div>
+                  <span class="font-bold text-emerald-400 block">EASY TIER</span>
+                  <span class="text-slate-500">Syntax & Foundation</span>
+                </div>
+                <div class="text-right">
+                  <span class="font-mono text-slate-200 font-bold text-sm">91.4% Accuracy</span>
+                  <span class="text-[10px] text-slate-500 block">Avg latency: 18s</span>
+                </div>
+              </div>
+
+              <div class="p-3 bg-slate-950 rounded-xl border border-slate-800 flex items-center justify-between">
+                <div>
+                  <span class="font-bold text-amber-400 block">MEDIUM TIER</span>
+                  <span class="text-slate-500">APIs & Collections</span>
+                </div>
+                <div class="text-right">
+                  <span class="font-mono text-slate-200 font-bold text-sm">73.8% Accuracy</span>
+                  <span class="text-[10px] text-slate-500 block">Avg latency: 34s</span>
+                </div>
+              </div>
+
+              <div class="p-3 bg-slate-950 rounded-xl border border-slate-800 flex items-center justify-between">
+                <div>
+                  <span class="font-bold text-rose-400 block">HARD TIER</span>
+                  <span class="text-slate-500">Concurrency & JVM Deep Dive</span>
+                </div>
+                <div class="text-right">
+                  <span class="font-mono text-slate-200 font-bold text-sm">54.2% Accuracy</span>
+                  <span class="text-[10px] text-slate-500 block">Avg latency: 58s</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ============================================================= -->
+      <!-- TAB 5: PREVIOUS QUIZZES (ATTEMPT HISTORY & RESULTS)          -->
+      <!-- ============================================================= -->
+      <section id="tab-reports" class="tab-content hidden space-y-6">
+        <div class="bg-slate-900 border border-slate-800 rounded-2xl p-6 shadow-xl flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+          <div>
+            <span class="text-xs uppercase font-bold text-teal-400 tracking-wider">Attempt History & Records</span>
+            <h3 class="text-2xl font-extrabold text-white mt-1">Previous Quizzes</h3>
+            <p class="text-sm text-slate-400 mt-1">
+              Complete history of completed adaptive examinations, scores, grades, and adaptive feedback.
+            </p>
+          </div>
+
+          <button onclick="window.print()" class="px-4 py-2 bg-slate-800 hover:bg-slate-700 text-slate-200 border border-slate-700 rounded-xl text-xs font-semibold flex items-center space-x-2 transition-all">
+            <i class="fa-solid fa-print text-xs"></i>
+            <span>Print Quiz Records</span>
+          </button>
+        </div>
+
+        <!-- Registry Table -->
+        <div class="bg-slate-900 border border-slate-800 rounded-2xl overflow-hidden shadow-xl">
+          <div class="p-4 border-b border-slate-800 flex items-center justify-between">
+            <div>
+              <h4 class="font-bold text-sm text-slate-200">My Past Quiz Attempts</h4>
+              <p class="text-[11px] text-slate-500 mt-0.5">Showing records for candidate: <span id="table-filter-student-label" class="text-indigo-400 font-semibold">Aditya Nair (ID: 1008)</span></p>
+            </div>
+            <span id="user-attempt-counter" class="text-xs px-2.5 py-1 rounded-full bg-slate-950 border border-slate-800 text-slate-400">0 Attempts</span>
+          </div>
+
+          <div class="overflow-x-auto">
+            <table class="w-full text-left text-xs">
+              <thead class="bg-slate-950 text-slate-400 uppercase font-mono tracking-wider border-b border-slate-800">
+                <tr>
+                  <th class="p-3.5">Attempt ID</th>
+                  <th class="p-3.5">Quiz / Unit</th>
+                  <th class="p-3.5">Score</th>
+                  <th class="p-3.5">Grade</th>
+                  <th class="p-3.5">Adaptive Feedback</th>
+                  <th class="p-3.5">Date Completed</th>
+                </tr>
+              </thead>
+              <tbody id="results-table-body" class="divide-y divide-slate-800 text-slate-300">
+                <!-- Dynamically populated for current student only -->
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- Progress Report Sheet -->
+        <div class="bg-slate-950 border border-slate-800 rounded-2xl p-6 space-y-4">
+          <div class="flex items-center space-x-2 border-b border-slate-800 pb-3">
+            <i class="fa-solid fa-clock-rotate-left text-teal-400"></i>
+            <h4 class="font-bold text-sm text-slate-200">Candidate Quiz Summary</h4>
+          </div>
+
+          <div class="p-4 bg-slate-900 rounded-xl border border-slate-800 text-xs space-y-3 font-mono">
+            <div class="flex justify-between border-b border-slate-800 pb-2">
+              <span class="text-slate-400">INSTITUTION: EXAMSPHERE ACADEMIC SYSTEM</span>
+              <span class="text-indigo-400">STATUS: VERIFIED BY VALIDATESERVICE</span>
+            </div>
+            <p class="text-slate-300">
+              This log confirms that student <strong id="rep-student-name">Aditya Nair</strong> (ID #<span id="rep-student-id">1008</span>) from the department of <strong id="rep-student-branch">Computer Science</strong> (<span id="rep-student-year">3rd Year</span>) has recorded past adaptive quiz assessments.
+            </p>
+            <div class="grid grid-cols-2 sm:grid-cols-4 gap-2 pt-2 text-slate-400">
+              <div>Department: <span id="rep-grid-branch">Computer Science</span></div>
+              <div>Year: <span id="rep-grid-year">3rd Year</span></div>
+              <div>Adaptive Engine: Enabled</div>
+              <div>Validation: Passed</div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="border-t border-slate-800 bg-slate-900/60 py-4 text-center text-xs text-slate-500">
+      <p>ExamSphere - Adaptive Quiz & Exam Engine • Problem Solving Through Programming [Java]</p>
+    </footer>
+  </div>
+
+  <!-- External JavaScript Application Logic -->
+  <script src="script.js"></script>
+</body>
+</html>
